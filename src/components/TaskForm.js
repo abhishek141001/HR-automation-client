@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, MouseEvent, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -75,7 +73,7 @@ function Menu({ position, onSelect }) {
   return (
     <ul
       className="context-menu bg-white shadow-lg rounded-md border border-gray-200 py-3 w-56 text-sm absolute"
-      style={{ top: position.y, left: position.x }}
+      style={{ top: position.y + 10, left: position.x + 10 }} // Adjusted menu position
     >
       <li className="py-2 px-4 hover:bg-indigo-100 cursor-pointer" onClick={() => onSelect('setStartTime')}>
         Set Start Time
@@ -251,40 +249,44 @@ function TaskForm() {
   };
 
   return (
-    <div
-      className="canvas bg-gray-100 p-8 rounded-lg shadow-2xl relative min-h-screen w-full flex items-center justify-center"
-      onClick={handleLeftClick}
-      onContextMenu={handleRightClick}
-    >
-      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-3xl">
-        {/* Project Selector */}
-        <ProjectSelector selectedProject={selectedProject} onProjectChange={setSelectedProject} />
+    <div className="flex min-h-screen">
 
-        {isTaskInputVisible && (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <TaskInput
-              task={task}
-              onTaskChange={(text) => setTask({ ...task, text })}
-              isTodo={isTodo}
-              onTodoChange={(completed) => setTask({ ...task, completed })}
-              isUrgent={isUrgent}
-            />
 
-            {isDescriptionVisible && <TaskDescription description={description} onDescriptionChange={setDescription} />}
+      <div
+        className="task-form bg-gray-100 p-8 rounded-lg shadow-2xl relative flex-1"
+        onClick={handleLeftClick}
+        onContextMenu={handleRightClick}
+      >
+        <div className="bg-white p-8 rounded-lg shadow-2xl">
+          {/* Project Selector */}
+          <ProjectSelector selectedProject={selectedProject} onProjectChange={setSelectedProject} />
 
-            {showStartDate && <DateSelector label="Start Date" selectedDate={startDate} onChange={setStartDate} />}
-            {showEndDate && <DateSelector label="End Date" selectedDate={endDate} onChange={setEndDate} />}
-          </form>
-        )}
+          {isTaskInputVisible && (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <TaskInput
+                task={task}
+                onTaskChange={(text) => setTask({ ...task, text })}
+                isTodo={isTodo}
+                onTodoChange={(completed) => setTask({ ...task, completed })}
+                isUrgent={isUrgent}
+              />
 
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="w-full py-3 px-6 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
-          >
-            Submit Task
-          </button>
+              {isDescriptionVisible && <TaskDescription description={description} onDescriptionChange={setDescription} />}
+
+              {showStartDate && <DateSelector label="Start Date" selectedDate={startDate} onChange={setStartDate} />}
+              {showEndDate && <DateSelector label="End Date" selectedDate={endDate} onChange={setEndDate} />}
+            </form>
+          )}
+
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="w-full py-3 px-6 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
+            >
+              Submit Task
+            </button>
+          </div>
         </div>
       </div>
 

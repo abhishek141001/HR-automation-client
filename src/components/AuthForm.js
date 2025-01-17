@@ -21,7 +21,7 @@ const AuthForm = () => {
       localStorage.setItem('userEmail', email);
 
       // Redirect to /journals with name and email as state
-      navigate('/journals', { state: { name, email } });
+      navigate('/SlackAuth', { state: { name, email } });
     }
   }, [navigate]);
 
